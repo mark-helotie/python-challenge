@@ -1,4 +1,4 @@
-# PyPoll --- Pyhton Challenge
+# PyPoll --- Python Challenge
 
 # Import os and csv modules
 import os
