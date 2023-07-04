@@ -17,7 +17,7 @@ with open(input_path,newline="") as csvfile:
     csvreader = csv.reader(csvfile)
 
     # Skip the header row
-    next(csvreader,None)
+    skipheader = next(csvreader,None)
 
     # Loop through the CSV and process each vote
     for row in csvreader:
