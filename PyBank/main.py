@@ -16,7 +16,7 @@ with open(input_path, newline="") as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
 
     # Skip the header row
-    next(csvreader)
+    skipheader = next(csvreader)
 
     # Loop through the CSV
     for row in csvreader:
