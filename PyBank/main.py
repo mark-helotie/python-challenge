@@ -50,22 +50,24 @@ minprofit = min(profitloss)
 indexmin = profitloss.index(minprofit)
 minmonth = months[indexmin]
 
-# Format the output accordingly
-financialanalysis = (f'''
-Financial Analysis
-----------------------------------
-Total Months: {totalmonths}
-Total: ${totalamount:,.0f}
-Average Change: ${avgchange:,.2f}
-Greatest Increase in Profits: {maxmonth} (${maxprofit:,.0f})
-Greatest Decrease in Profits: {minmonth} (${minprofit:,.0f})
+# Create a .txt file to contain the vote analysis
+write_file = os.path.join('analysis', 'financial_analysis.txt')
+filewriter = open(write_file, mode = 'w')
 
-''')
+# Print analysis to file
+filewriter.write(" \n")
+filewriter.write("Financial Analysis\n")
+filewriter.write("--------------------------\n")
+filewriter.write(f"Total Months: {totalmonths}\n")
+filewriter.write(f"Total: ${totalamount:,.0f}\n")
+filewriter.write(f"Average Change: ${avgchange:,.2f}\n")
+filewriter.write(f"Greatest Increase in Profits: {maxmonth} (${maxprofit:,.0f})\n")
+filewriter.write(f"Greatest Decrease in Profits: {minmonth} (${minprofit:,.0f})\n")
+filewriter.write(" \n")
 
-# Print out the analysis in the terminal
-print(financialanalysis)
+# Close output file
+filewriter.close()
 
-# Create a .txt file containing the same analysis
-analysispath = os.path.join('analysis', 'financial_analysis.txt')
-with open(analysispath,'w') as textfile:
-    textfile.write(financialanalysis)
+# Display output on terminal
+with open(write_file, 'r') as f:
+    print(f.read())
