@@ -3,7 +3,7 @@
 # Import os and csv modules
 import os
 import csv
-
+  
 # Initialize variables
 budget_data = []
 output_data = ""
