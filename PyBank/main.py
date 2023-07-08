@@ -5,50 +5,48 @@ import os
 import csv
 
 # Initialize variables
-months = []
-profitloss = []
+budget_data = []
+output_data = ""
+total_months = 0
+total_amount = 0
+average_change = []
+change = 0
 
-# Set path for the input file
-input_path = os.path.join('Resources', 'budget_data.csv')
+# Following variables store the data for greatest increase/decrease
+inc_amt = 0
+inc_month = ""
+dec_amt = 0
+dec_month = ""
 
-# Open the CSV
-with open(input_path, newline="") as csvfile:
-    csvreader = csv.reader(csvfile, delimiter=",")
+# opening the csv
+filepath = os.path.join('Resources','budget_data.csv')
+with open(filepath) as csvfile:
 
-    # Skip the header row
-    skipheader = next(csvreader)
+    csv_reader = csv.reader(csvfile)
+    colunns = next(csv_reader)
+    row1 = next(csv_reader)
+    total_months += 1 
+    previous_pl = int(row1[1])
+    total_amount = int(row1[1])
 
-    # Loop through the CSV
-    for row in csvreader:
-    
-        # Add date
-        months.append(row[0])
-        
-        # Add Profit/Loss
-        profitloss.append(float(row[1]))
+    # looping through the budget_data
+    for row in csv_reader:
+        total_months += 1 
+        total_amount += int(row[1])
+        current_pl = int(row[1]) 
+        change = (current_pl - previous_pl)
+        average_change.append(change)
+        previous_pl = int(row[1])
 
-# Calculate the total months
-totalmonths = (len(months))
+        if inc_amt < change:
+            inc_amt = change
+            inc_month = row[0]
 
-# Calculate the net total amount
-totalamount = sum(profitloss)
-
-# Calculate the average change per month
-avgchange = totalamount / totalmonths
-
-# Calculate the greatest increase
-maxprofit = max(profitloss)
-
-# Use the index of the greatest increase to find the corresponding date
-indexmax = profitloss.index(maxprofit)
-maxmonth = months[indexmax]
-
-# Calculate the greatest decrease 
-minprofit = min(profitloss)
-
-# Use the index of the greatest decrease to find the corresponding date
-indexmin = profitloss.index(minprofit)
-minmonth = months[indexmin]
+        if dec_amt > change:
+            dec_amt = change
+            dec_month = row[0]
+   
+    average = round((sum(average_change)/len(average_change)),2)
 
 # Create a .txt file to contain the vote analysis
 write_file = os.path.join('analysis', 'financial_analysis.txt')
@@ -58,11 +56,11 @@ filewriter = open(write_file, mode = 'w')
 filewriter.write(" \n")
 filewriter.write("Financial Analysis\n")
 filewriter.write("--------------------------\n")
-filewriter.write(f"Total Months: {totalmonths}\n")
-filewriter.write(f"Total: ${totalamount:,.0f}\n")
-filewriter.write(f"Average Change: ${avgchange:,.2f}\n")
-filewriter.write(f"Greatest Increase in Profits: {maxmonth} (${maxprofit:,.0f})\n")
-filewriter.write(f"Greatest Decrease in Profits: {minmonth} (${minprofit:,.0f})\n")
+filewriter.write(f"Total Months: {total_months}\n")
+filewriter.write(f"Total: ${total_amount:,.0f}\n")
+filewriter.write(f"Average Change: ${average:,.2f}\n")
+filewriter.write(f"Greatest Increase in Profits: {inc_month} (${inc_amt:,.0f})\n")
+filewriter.write(f"Greatest Decrease in Profits: {dec_month} (${dec_amt:,.0f})\n")
 filewriter.write(" \n")
 
 # Close output file
