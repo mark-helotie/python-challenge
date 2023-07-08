@@ -3,7 +3,7 @@ Submission #3 for Data Analysis bootcamp
 
 PyBank results:
 
-![image](https://github.com/mark-helotie/python-challenge/assets/43053988/8b522ba0-6595-4369-a27d-5bbf4818dc15)
+![image](https://github.com/mark-helotie/python-challenge/assets/43053988/635281dd-eae6-48ee-9aab-7609b37fdc70)
 
 
 PyPoll results:
